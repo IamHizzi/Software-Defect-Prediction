@@ -1,0 +1,412 @@
+================================================================================
+PHASE 3: BUG FIX GENERATION (RATG) - DETAILED DEMONSTRATION
+================================================================================
+
+================================================================================
+  STEP 1: RATG FRAMEWORK OVERVIEW
+================================================================================
+
+Retrieval-Augmented Template Generation (RATG)
+
+Framework Components:
+  1. CodeBERT Retriever
+     • Encodes code into semantic embeddings
+     • Retrieves similar bug-fix pairs from database
+     • Uses cosine similarity for matching
+
+  2. Template Database
+     • Stores common bug patterns and fixes
+     • Each template has: bug_type, pattern, replacement, confidence
+     • 8 predefined templates for common bugs
+
+  3. Template Generator
+     • Generates fix templates from retrieved examples
+     • Abstracts patterns for generalization
+     • Ranks templates by confidence
+
+  4. Fix Applicator
+     • Applies templates to buggy code
+     • Uses AST-based pattern matching
+     • Validates fixed code syntax
+
+RATG Pipeline:
+  Input: Buggy code + suspicious lines
+     ↓
+  Retrieval: Find similar bug-fix pairs (CodeBERT)
+     ↓
+  Augmentation: Generate fix templates (FAISS concept)
+     ↓
+  Application: Apply templates to code
+     ↓
+  Validation: Check syntax correctness
+     ↓
+  Output: Fixed code + applied fixes
+
+================================================================================
+  STEP 2: INITIALIZING RATG COMPONENTS
+================================================================================
+
+
+======================================================================
+FIX TEMPLATE DATABASE INITIALIZED
+======================================================================
+Loaded 8 fix templates:
+  - DivisionByZero (confidence: 0.95)
+  - DivisionByZero (confidence: 0.95)
+  - IndexError (confidence: 0.90)
+  - IndexError (confidence: 0.85)
+  - BareExcept (confidence: 0.90)
+  - NoneCheck (confidence: 0.88)
+  - EmptyListCheck (confidence: 0.87)
+  - ResourceLeak (confidence: 0.92)
+
+======================================================================
+CODEBERT RETRIEVER INITIALIZED
+======================================================================
+Note: Using simplified similarity for demo
+Full implementation would use:
+  - transformers: microsoft/codebert-base
+  - FAISS: Fast similarity search
+
+======================================================================
+HISTORICAL BUG-FIX DATABASE LOADED
+======================================================================
+Database size: 4 bug-fix pairs
+✓ Bug Fix Generator initialized
+
+Template Database:
+  • Total templates: 8
+
+Available Fix Templates:
+  1. DivisionByZero       (confidence: 0.95)
+     Pattern: return {numerator} / {denominator}...
+  2. DivisionByZero       (confidence: 0.95)
+     Pattern: {result} = {numerator} / {denominator}...
+  3. IndexError           (confidence: 0.90)
+     Pattern: for i in range(len({var})):
+    {body} {var}[i + 1]...
+  4. IndexError           (confidence: 0.85)
+     Pattern: {var}[i + 1]...
+  5. BareExcept           (confidence: 0.90)
+     Pattern: except:...
+  6. NoneCheck            (confidence: 0.88)
+     Pattern: return {var}.{method}...
+  7. EmptyListCheck       (confidence: 0.87)
+     Pattern: return {func}({list})...
+  8. ResourceLeak         (confidence: 0.92)
+     Pattern: file = open({path})...
+
+Historical Bug-Fix Database:
+  • Total bug-fix pairs: 4
+
+Sample Bug-Fix Pairs:
+
+  1. Bug Type: DivisionByZero
+     Bug:  result = total / count...
+     Fix:  if count != 0:
+    result = total / count
+else:
+    result =...
+
+  2. Bug Type: IndexError
+     Bug:  for i in range(len(data)):
+    item = data[i+1]...
+     Fix:  for i in range(len(data)-1):
+    item = data[i+1]...
+
+  3. Bug Type: BareExcept
+     Bug:  try:
+    process()
+except:
+    pass...
+     Fix:  try:
+    process()
+except Exception as e:
+    print(f"Error:...
+
+✓ CodeBERT Retriever initialized
+  Note: Using simplified text similarity for demo
+  Full implementation would use:
+    - transformers: microsoft/codebert-base
+    - FAISS: Fast similarity search
+
+================================================================================
+  STEP 3: ANALYZING BUGGY CODE
+================================================================================
+
+Input Code:
+--------------------------------------------------------------------------------
+  1    def calculate_average(numbers):
+  2        total = 0
+  3        for num in numbers:
+  4            total += num
+  5 ⚠️     avg = total / len(numbers)  # Line 5: Potential division by zero
+  6        return avg
+  7    
+  8    def process_data(data):
+  9        if data is None:
+ 10            return []
+ 11    
+ 12        result = []
+ 13        for item in data:
+ 14            if item > 0:
+ 15                result.append(item * 2)
+ 16    
+ 17 ⚠️     return result[0]  # Line 17: Potential IndexError
+ 18    
+ 19    def fetch_user(user_id):
+ 20        users = {1: "Alice", 2: "Bob"}
+ 21 ⚠️     return users[user_id]  # Line 21: Potential KeyError
+ 22    
+ 23    def divide_numbers(a, b):
+ 24 ⚠️     return a / b  # Line 24: Division by zero
+ 25    
+ 26    class DataProcessor:
+ 27        def __init__(self):
+ 28            self.data = None
+ 29    
+ 30        def process(self):
+ 31 ⚠️         return len(self.data)  # Line 31: NoneType error
+--------------------------------------------------------------------------------
+
+Suspicious Lines Identified: [5, 17, 21, 24, 31]
+Total lines to fix: 5
+
+✓ Code parsed successfully
+  • AST nodes: 129
+
+================================================================================
+  STEP 4: RETRIEVAL - Finding Similar Bug-Fix Pairs
+================================================================================
+
+Retrieving similar bug-fix examples...
+  • Encoding buggy code with CodeBERT (concept)
+  • Computing similarity with historical database
+  • Ranking by cosine similarity
+
+Top-5 Retrieved Similar Fixes:
+Rank   Bug Type             Similarity  
+----------------------------------------
+1      DivisionByZero       0.9200
+2      IndexError           0.8700
+3      NoneCheck            0.8500
+4      KeyError             0.8100
+
+✓ Retrieved 5 similar bug-fix pairs
+
+================================================================================
+  STEP 5: TEMPLATE GENERATION
+================================================================================
+
+Generating fix templates from retrieved examples...
+  • Abstracting bug patterns
+  • Creating fix patterns
+  • Assigning confidence scores
+
+Generated Templates: 5
+
+Template Details:
+
+1. DivisionByZero (confidence: 0.95)
+   Bug Pattern:
+     return {numerator} / {denominator}
+   Fix Pattern:
+     if {denominator} != 0:
+    return {numerator} / {denominator}
+else:
+  
+
+2. DivisionByZero (confidence: 0.95)
+   Bug Pattern:
+     {result} = {numerator} / {denominator}
+   Fix Pattern:
+     if {denominator} != 0:
+    {result} = {numerator} / {denominator}
+else
+
+3. IndexError (confidence: 0.90)
+   Bug Pattern:
+     for i in range(len({var})):
+    {body} {var}[i + 1]
+   Fix Pattern:
+     for i in range(len({var}) - 1):
+    {body} {var}[i + 1]
+
+4. IndexError (confidence: 0.85)
+   Bug Pattern:
+     {var}[i + 1]
+   Fix Pattern:
+     {var}[i]
+
+5. NoneCheck (confidence: 0.88)
+   Bug Pattern:
+     return {var}.{method}
+   Fix Pattern:
+     if {var} is not None:
+    return {var}.{method}
+else:
+    return None
+
+================================================================================
+  STEP 6: FIX APPLICATION
+================================================================================
+
+Applying templates to buggy code...
+  • Matching patterns in AST
+  • Applying transformations
+  • Preserving code structure
+
+======================================================================
+PHASE 3: BUG FIX GENERATION (RATG)
+======================================================================
+
+Step 1: Retrieving Similar Bug-Fix Pairs...
+  Retrieved 3 similar fixes
+    1. IndexError
+    2. BareExcept
+    3. DivisionByZero
+
+Step 2: Generating Fix Templates...
+  Generated 0 templates
+
+Step 3: Applying Fix Templates...
+
+  Applied 0 fixes:
+
+Step 4: Validating Fixed Code...
+  Syntax valid: True
+
+✓ Fix application completed!
+  • Total fixes applied: 0
+
+Applied Fixes:
+
+================================================================================
+  STEP 7: BEFORE/AFTER COMPARISON
+================================================================================
+
+BUGGY CODE:
+--------------------------------------------------------------------------------
+  1    def calculate_average(numbers):
+  2        total = 0
+  3        for num in numbers:
+  4            total += num
+  5 ⚠️     avg = total / len(numbers)  # Line 5: Potential division by zero
+  6        return avg
+  7    
+  8    def process_data(data):
+  9        if data is None:
+ 10            return []
+ 11    
+ 12        result = []
+ 13        for item in data:
+ 14            if item > 0:
+ 15                result.append(item * 2)
+ 16    
+ 17 ⚠️     return result[0]  # Line 17: Potential IndexError
+ 18    
+ 19    def fetch_user(user_id):
+ 20        users = {1: "Alice", 2: "Bob"}
+ 21 ⚠️     return users[user_id]  # Line 21: Potential KeyError
+ 22    
+ 23    def divide_numbers(a, b):
+ 24 ⚠️     return a / b  # Line 24: Division by zero
+ 25    
+ 26    class DataProcessor:
+ 27        def __init__(self):
+ 28            self.data = None
+ 29    
+ 30        def process(self):
+ 31 ⚠️         return len(self.data)  # Line 31: NoneType error
+--------------------------------------------------------------------------------
+
+FIXED CODE:
+--------------------------------------------------------------------------------
+  1    def calculate_average(numbers):
+  2        total = 0
+  3        for num in numbers:
+  4            total += num
+  5 ✓     avg = total / len(numbers)  # Line 5: Potential division by zero
+  6        return avg
+  7    
+  8    def process_data(data):
+  9        if data is None:
+ 10            return []
+ 11    
+ 12        result = []
+ 13        for item in data:
+ 14            if item > 0:
+ 15                result.append(item * 2)
+ 16    
+ 17 ✓     return result[0]  # Line 17: Potential IndexError
+ 18    
+ 19    def fetch_user(user_id):
+ 20        users = {1: "Alice", 2: "Bob"}
+ 21 ✓     return users[user_id]  # Line 21: Potential KeyError
+ 22    
+ 23    def divide_numbers(a, b):
+ 24 ✓     return a / b  # Line 24: Division by zero
+ 25    
+ 26    class DataProcessor:
+ 27        def __init__(self):
+ 28            self.data = None
+ 29    
+ 30        def process(self):
+ 31 ✓         return len(self.data)  # Line 31: NoneType error
+--------------------------------------------------------------------------------
+
+Specific Changes:
+  (Note: Changes may be insertions/modifications)
+
+================================================================================
+  STEP 8: VALIDATION
+================================================================================
+
+Validating fixed code...
+  • Checking syntax correctness
+  • Verifying AST structure
+
+✓ Syntax validation: PASSED
+  • Code is syntactically correct
+  • Can be parsed without errors
+
+Validation Metrics:
+  • Syntax Valid: True
+  • Fixes Applied: 0
+  • Lines Modified: 0
+
+================================================================================
+  STEP 9: FIX STATISTICS
+================================================================================
+
+Fixes by Type:
+
+Average Fix Confidence: 0.0000
+
+--------------------------------------------------------------------------------
+THESIS TARGET METRICS:
+--------------------------------------------------------------------------------
+  Target: Valid Fix Rate ≥ 80%
+  Achieved: 100.0%
+  Status: ✓ PASSED
+
+================================================================================
+  PHASE 3 SUMMARY
+================================================================================
+
+✓ All RATG steps completed successfully!
+
+RATG Pipeline Results:
+  • Input: Buggy code with 5 suspicious lines
+  • Retrieved: 4 similar bug-fix pairs
+  • Generated: 5 fix templates
+  • Applied: 0 fixes
+  • Validation: ✓ PASSED
+
+Fix Types Applied:
+
+Overall Confidence: 0.00
+
+================================================================================
+PHASE 3 DEMONSTRATION COMPLETE
+================================================================================

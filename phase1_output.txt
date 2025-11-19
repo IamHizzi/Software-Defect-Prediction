@@ -1,0 +1,271 @@
+================================================================================
+PHASE 1: DEFECT PREDICTION - DETAILED DEMONSTRATION
+================================================================================
+
+================================================================================
+  STEP 1: LOADING NASA PROMISE DATASET
+================================================================================
+
+Available datasets: CM1, JM1, KC1, KC2, PC1
+Loading dataset: JM1 (largest dataset)
+
+============================================================
+Loading NASA Dataset: JM1
+============================================================
+Using cached JM1 from ./nasa_datasets/JM1.arff
+  Raw data shape: (10885, 22)
+  Processed shape: X=(10885, 21), y=(10885,)
+  Total samples: 10885
+  Features: 21
+  Defective: 2106 (19.3%)
+  Clean: 8779 (80.7%)
+
+✓ Dataset loaded successfully!
+  - Total samples: 10,885
+  - Total features: 21
+  - Defective samples: 2,106 (19.3%)
+  - Non-defective samples: 8,779 (80.7%)
+  - Class imbalance ratio: 1:4.2
+
+First 5 samples (features):
+   0   1   2   3     4       5    6     7      8        9    10      11    12   13   14  15   16    17    18    19   20
+  1.1 1.4 1.4 1.4   1.3    1.30 1.30  1.30   1.30     1.30 1.30    1.30   2.0  2.0  2.0 2.0  1.2   1.2   1.2   1.2  1.4
+  1.0 1.0 1.0 1.0   1.0    1.00 1.00  1.00   1.00     1.00 1.00    1.00   1.0  1.0  1.0 1.0  1.0   1.0   1.0   1.0  1.0
+ 72.0 7.0 1.0 6.0 198.0 1134.13 0.05 20.31  55.85 23029.10 0.38 1279.39  51.0 10.0  8.0 1.0 17.0  36.0 112.0  86.0 13.0
+190.0 3.0 1.0 3.0 600.0 4348.76 0.06 17.06 254.87 74202.67 1.45 4122.37 129.0 29.0 28.0 2.0 17.0 135.0 329.0 271.0  5.0
+ 37.0 4.0 1.0 4.0 126.0  599.12 0.06 17.19  34.86 10297.30 0.20  572.07  28.0  1.0  6.0 0.0 11.0  16.0  76.0  50.0  7.0
+
+Labels for first 10 samples:
+  [0 1 1 1 1 1 1 1 1 1] (0=Non-defective, 1=Defective)
+
+================================================================================
+  STEP 2: INITIALIZING DEFECT PREDICTOR
+================================================================================
+
+✓ DefectPredictor initialized
+
+Components:
+  - Feature Selector: Mutual Information (k=15)
+  - Sampler: SMOTE-TOMEK (hybrid resampling)
+  - Scaler: StandardScaler
+  - Ensemble: Voting Classifier
+    • Random Forest (n_estimators=200)
+    • SVM (kernel=rbf, C=10)
+    • Decision Tree (max_depth=10)
+
+================================================================================
+  STEP 3: FEATURE SELECTION (Mutual Information)
+================================================================================
+
+Original features: 21
+
+======================================================================
+FEATURE SELECTION - Mutual Information
+======================================================================
+Total features: 21
+Selected features: 15
+Top 5 MI scores: [np.float64(0.05108432700667764), np.float64(0.04671341763768999), np.float64(0.043763454013086234), np.float64(0.041450950710979484), np.float64(0.04024336670978079)]
+Selected features: 15
+✓ Reduced dimensionality by 6 features
+
+Top 15 features by Mutual Information:
+   1. Feature  0: MI Score = 0.0551
+   2. Feature  5: MI Score = 0.0465
+   3. Feature  8: MI Score = 0.0457
+   4. Feature  9: MI Score = 0.0432
+   5. Feature 18: MI Score = 0.0428
+   6. Feature 11: MI Score = 0.0426
+   7. Feature  4: MI Score = 0.0418
+   8. Feature 17: MI Score = 0.0376
+   9. Feature 20: MI Score = 0.0375
+  10. Feature 12: MI Score = 0.0356
+  11. Feature  7: MI Score = 0.0352
+  12. Feature 19: MI Score = 0.0335
+  13. Feature  3: MI Score = 0.0324
+  14. Feature  1: MI Score = 0.0307
+  15. Feature 14: MI Score = 0.0307
+
+================================================================================
+  STEP 4: DATA BALANCING (SMOTE-TOMEK)
+================================================================================
+
+Before balancing:
+  - Class 0 (Non-defective): 8,779 samples
+  - Class 1 (Defective): 2,106 samples
+  - Imbalance ratio: 1:4.17
+
+======================================================================
+CLASS BALANCING - SMOTE-TOMEK
+======================================================================
+Before balancing:
+  Total samples: 10885
+  Class 0: 8779 (80.7%)
+  Class 1: 2106 (19.3%)
+
+After balancing:
+  Total samples: 16540
+  Class 0: 8270 (50.0%)
+  Class 1: 8270 (50.0%)
+
+After SMOTE-TOMEK balancing:
+  - Class 0 (Non-defective): 8,270 samples
+  - Class 1 (Defective): 8,270 samples
+  - Imbalance ratio: 1:1.00
+  - Total samples: 16,540 (from 10,885)
+
+✓ SMOTE: Oversampled minority class
+✓ TOMEK: Removed noisy boundary samples
+
+================================================================================
+  STEP 5: TRAINING ENSEMBLE MODEL
+================================================================================
+
+Training with train-test split (80-20)...
+
+======================================================================
+MODEL TRAINING
+======================================================================
+Features scaled using StandardScaler
+
+======================================================================
+FEATURE SELECTION - Mutual Information
+======================================================================
+Total features: 21
+Selected features: 15
+Top 5 MI scores: [np.float64(0.05095876542188593), np.float64(0.05039996410017644), np.float64(0.04980960970877302), np.float64(0.049624106209881), np.float64(0.04618585272756781)]
+
+======================================================================
+CLASS BALANCING - SMOTE-TOMEK
+======================================================================
+Before balancing:
+  Total samples: 8708
+  Class 0: 7023 (80.6%)
+  Class 1: 1685 (19.4%)
+
+After balancing:
+  Total samples: 13828
+  Class 0: 6914 (50.0%)
+  Class 1: 6914 (50.0%)
+
+======================================================================
+BUILDING ENSEMBLE MODEL
+======================================================================
+Ensemble created with:
+  - Random Forest (n_estimators=100, max_depth=10)
+  - SVM (kernel=rbf)
+  - Decision Tree (max_depth=8)
+  - Voting: Soft
+
+Training ensemble model...
+✓ Training complete!
+
+✓ Training completed!
+
+Model Architecture:
+┌─────────────────────────────────────────┐
+│         VOTING CLASSIFIER               │
+│         (Soft Voting)                   │
+├─────────────────────────────────────────┤
+│  1. Random Forest                       │
+│     - n_estimators: 200                 │
+│     - max_depth: 15                     │
+│     - min_samples_split: 2              │
+├─────────────────────────────────────────┤
+│  2. Support Vector Machine              │
+│     - kernel: rbf                       │
+│     - C: 10                             │
+│     - probability: True                 │
+├─────────────────────────────────────────┤
+│  3. Decision Tree                       │
+│     - max_depth: 10                     │
+│     - min_samples_split: 2              │
+└─────────────────────────────────────────┘
+
+================================================================================
+  STEP 6: EVALUATION METRICS
+================================================================================
+
+Evaluating model on test set...
+
+Performance Metrics:
+  • Accuracy:  0.7115 (71.15%)
+  • Precision: 0.3462
+  • Recall:    0.5534
+  • F1-Score:  0.4260
+  • ROC-AUC:   0.7166
+
+Cross-Validation Results (5-fold):
+  • Mean F1-Score: 0.2153 ± 0.0182
+  • CV Scores: [0.22966507 0.1804878  0.22274882 0.22871046 0.21479714]
+
+--------------------------------------------------------------------------------
+THESIS TARGET METRICS:
+--------------------------------------------------------------------------------
+  Target: F1-Score ≥ 0.85    | Achieved: 0.4260 ✗
+  Target: ROC-AUC ≥ 0.85     | Achieved: 0.7166 ✗
+  Target: Accuracy ≥ 0.85    | Achieved: 0.7115 ✗
+
+================================================================================
+  STEP 7: CONFUSION MATRIX
+================================================================================
+
+Confusion Matrix:
+                Predicted
+              Non-Def  Defective
+Actual Non-Def   1316      440
+       Defective  188      233
+
+Detailed Breakdown:
+  • True Negatives (TN):  1316 - Correctly predicted non-defective
+  • False Positives (FP):  440 - Incorrectly predicted as defective
+  • False Negatives (FN):  188 - Missed defective modules
+  • True Positives (TP):   233 - Correctly predicted defective
+
+✓ Confusion matrix saved: phase1_confusion_matrix.png
+
+================================================================================
+  STEP 8: ROC CURVE
+================================================================================
+
+ROC-AUC Score: 0.7166
+✓ ROC curve saved: phase1_roc_curve.png
+
+================================================================================
+  STEP 9: FEATURE IMPORTANCE (Random Forest)
+================================================================================
+
+Top 10 Most Important Features:
+   1. Feature  0: 0.1782
+   2. Feature  1: 0.1409
+   3. Feature 14: 0.1263
+   4. Feature  9: 0.0765
+   5. Feature  3: 0.0559
+   6. Feature 11: 0.0557
+   7. Feature 10: 0.0476
+   8. Feature  4: 0.0461
+   9. Feature 12: 0.0455
+  10. Feature  6: 0.0402
+
+✓ Feature importance chart saved: phase1_feature_importance.png
+
+================================================================================
+  PHASE 1 SUMMARY
+================================================================================
+
+✓ All steps completed successfully!
+
+Generated Outputs:
+  1. phase1_confusion_matrix.png
+  2. phase1_roc_curve.png
+  3. phase1_feature_importance.png
+
+Key Results:
+  • Dataset: JM1 (10,885 samples)
+  • Features: 15 (selected from 21)
+  • Accuracy: 71.15%
+  • F1-Score: 0.4260
+  • ROC-AUC: 0.7166
+
+================================================================================
+PHASE 1 DEMONSTRATION COMPLETE
+================================================================================

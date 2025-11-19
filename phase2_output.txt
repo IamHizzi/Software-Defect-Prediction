@@ -1,0 +1,272 @@
+================================================================================
+PHASE 2: DEFECT LOCALIZATION - DETAILED DEMONSTRATION
+================================================================================
+
+================================================================================
+  STEP 1: CODE PARSING & AST GENERATION
+================================================================================
+
+Input Code:
+--------------------------------------------------------------------------------
+
+def calculate_average(numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    avg = total / len(numbers)  # Potential division by zero
+    return avg
+
+def process_data(data):
+    if data is None:
+        return []
+
+    result = []
+    for item in data:
+        if item > 0:
+            result.append(item * 2)
+
+    return result[0]  # Potential IndexError
+
+def fetch_user(user_id):
+    users = {1: "Alice", 2: "Bob"}
+    return users[user_id]  # Potential KeyError
+
+class DataProcessor:
+    def __init__(self):
+        self.data = None
+
+    def process(self):
+        return len(self.data)  # Potential NoneType error
+
+--------------------------------------------------------------------------------
+
+✓ Code parsed successfully!
+  - AST root node: Module
+  - Total AST nodes: 118
+
+AST Node Type Distribution:
+  • Name                :  24
+  • Load                :  23
+  • Constant            :  10
+  • Store               :   8
+  • FunctionDef         :   5
+  • arguments           :   5
+  • Assign              :   5
+  • Return              :   5
+  • arg                 :   5
+  • Call                :   3
+
+================================================================================
+  STEP 2: AST TO GRAPH CONVERSION
+================================================================================
+
+Converting AST to graph representation...
+  • Extracting nodes (functions, classes, statements, expressions)
+  • Building edges (parent-child relationships)
+  • Extracting features (type, nesting, complexity)
+
+✓ Graph constructed successfully!
+  • Total nodes: 118
+  • Total edges: 117
+  • Graph density: 0.0085
+
+Graph Structure:
+  • Average degree: 1.98
+  • Max depth: 0
+
+Sample Graph Nodes (first 5):
+  Node 0:
+    - Data keys: ['features', 'node_type', 'line']
+    - Features: [1.0, 0.8, 0.75]
+  Node 1:
+    - Data keys: ['features', 'node_type', 'line']
+    - Features: [0.0, 0.5, 0.75]
+  Node 2:
+    - Data keys: ['features', 'node_type', 'line']
+    - Features: [1.0, 0.1, 0.75]
+  Node 3:
+    - Data keys: ['features', 'node_type', 'line']
+    - Features: [1.0, 0.0, 0.75]
+  Node 4:
+    - Data keys: ['features', 'node_type', 'line']
+    - Features: [0.4166666666666667, 0.2, 0.75]
+
+✓ Graph visualization saved: phase2_graph_structure.png
+
+================================================================================
+  STEP 3: NODE FEATURE EXTRACTION
+================================================================================
+
+Extracting features for each node:
+  1. Node Type ID (categorical → normalized)
+  2. Nesting Depth (control flow complexity)
+  3. Defect Probability (from Phase 1)
+
+Feature Vector Shape: [num_nodes × 3]
+  • Features matrix: torch.Size([118, 3])
+  • Feature range: [0.000, 1.000]
+
+Sample Feature Vectors (first 5 nodes):
+     Node Type    Nesting    Defect Prob
+  0: 1.000      0.800      0.750
+  1: 0.000      0.500      0.750
+  2: 1.000      0.100      0.750
+  3: 1.000      0.000      0.750
+  4: 0.417      0.200      0.750
+
+================================================================================
+  STEP 4: GAT MODEL ARCHITECTURE
+================================================================================
+
+
+======================================================================
+GAT MODEL STRUCTURE
+======================================================================
+Input Layer:   3 features
+GAT Layer 1:   64 hidden units, 4 attention heads
+GAT Layer 2:   64 hidden units, 1 attention head
+Output Layer:  1 unit (defectiveness score)
+Total Params:  18177
+Graph Attention Network (GAT) Structure:
+┌────────────────────────────────────────────────────────┐
+│                    INPUT LAYER                         │
+│  Input Features: 3 dimensions                         │
+│  (Node Type, Nesting Depth, Defect Probability)       │
+├────────────────────────────────────────────────────────┤
+│                 GAT LAYER 1                            │
+│  • Multi-Head Attention: 4 heads                      │
+│  • Hidden Dimension: 64                              │
+│  • Output Dimension: 256                           │
+│  • Dropout: 0.6                                        │
+│  • Activation: ELU                                     │
+├────────────────────────────────────────────────────────┤
+│                 GAT LAYER 2                            │
+│  • Single-Head Attention: 1 head                      │
+│  • Hidden Dimension: 64                              │
+│  • Output Dimension: 64                              │
+│  • Dropout: 0.6                                        │
+│  • Activation: ELU                                     │
+├────────────────────────────────────────────────────────┤
+│                 OUTPUT LAYER                           │
+│  • Fully Connected Layer                               │
+│  • Input Dimension: 64                               │
+│  • Output Dimension: 1 (defectiveness score)           │
+│  • Activation: Sigmoid                                 │
+└────────────────────────────────────────────────────────┘
+
+Model Parameters:
+  • Total parameters: 18,177
+  • Trainable parameters: 18,177
+
+Parameter Breakdown:
+  • conv1.att_src                 :    256 params, shape [1, 4, 64]
+  • conv1.att_dst                 :    256 params, shape [1, 4, 64]
+  • conv1.bias                    :    256 params, shape [256]
+  • conv1.lin.weight              :    768 params, shape [256, 3]
+  • conv2.att_src                 :     64 params, shape [1, 1, 64]
+  • conv2.att_dst                 :     64 params, shape [1, 1, 64]
+  • conv2.bias                    :     64 params, shape [64]
+  • conv2.lin.weight              : 16,384 params, shape [64, 256]
+  • fc.weight                     :     64 params, shape [1, 64]
+  • fc.bias                       :      1 params, shape [1]
+
+================================================================================
+  STEP 5: GAT MODEL INFERENCE
+================================================================================
+
+
+======================================================================
+GAT MODEL STRUCTURE
+======================================================================
+Input Layer:   3 features
+GAT Layer 1:   64 hidden units, 4 attention heads
+GAT Layer 2:   64 hidden units, 1 attention head
+Output Layer:  1 unit (defectiveness score)
+Total Params:  18177
+Running defect localization...
+  1. Converting NetworkX graph to PyTorch Geometric format
+  2. Forward pass through GAT layers
+  3. Applying attention mechanism
+  4. Computing defectiveness scores
+
+======================================================================
+PHASE 2: DEFECT LOCALIZATION
+======================================================================
+
+Step 1: Code Parsing & Graph Construction...
+  Graph created: 118 nodes, 117 edges
+
+Step 2: Converting to Graph Representation...
+  Node features shape: torch.Size([118, 3])
+  Edge index shape: torch.Size([2, 117])
+
+Step 3: GAT Model Inference...
+
+Step 4: Identifying Top-3 Suspicious Nodes...
+  Rank 1: Line -1, Type=Module, Score=0.5218
+  Rank 2: Line 24, Type=ClassDef, Score=0.5194
+  Rank 3: Line 9, Type=FunctionDef, Score=0.5193
+Warning: Could not create visualization: Unable to determine Axes to steal space for Colorbar. Either provide the *cax* argument to use as the Axes for the Colorbar, provide the *ax* argument to steal space from it, or add *mappable* to an Axes.
+
+✓ Localization complete!
+  Top suspicious lines: [24, 9]
+
+✓ Inference completed!
+  • Processed 118 nodes
+  • Generated 118 defectiveness scores
+  • Score range: [0.5111, 0.5218]
+
+================================================================================
+  STEP 6: IDENTIFYING SUSPICIOUS CODE LOCATIONS
+================================================================================
+
+Top-10 Most Suspicious Nodes:
+Rank   Score      Line     Type           
+--------------------------------------------------
+1      0.5218     -1       Module         
+2      0.5194     24       ClassDef       
+3      0.5193     9        FunctionDef    
+
+Top-3 Suspicious Lines (for thesis metric):
+  1. Line 24
+  2. Line 9
+
+✓ Score distribution saved: phase2_score_distribution.png
+
+================================================================================
+  STEP 7: ATTENTION MECHANISM VISUALIZATION
+================================================================================
+
+Multi-Head Attention Mechanism:
+  • Head 1: Focuses on structural patterns
+  • Head 2: Focuses on complexity patterns
+  • Head 3: Focuses on data flow patterns
+  • Head 4: Focuses on control flow patterns
+
+Attention weights are learned during training to identify
+which neighboring nodes are most relevant for defect detection.
+
+✓ Attention visualization saved: phase2_attention_weights.png
+
+================================================================================
+  PHASE 2 SUMMARY
+================================================================================
+
+✓ All steps completed successfully!
+
+Generated Outputs:
+  1. phase2_graph_structure.png
+  2. phase2_score_distribution.png
+  3. phase2_attention_weights.png
+  4. phase2_graph.png (generated by localizer)
+
+Key Results:
+  • Graph nodes: 118
+  • Graph edges: 117
+  • GAT parameters: 18,177
+  • Top-3 suspicious lines: [24, 9]
+  • Score range: [0.5111, 0.5218]
+
+================================================================================
+PHASE 2 DEMONSTRATION COMPLETE
+================================================================================
