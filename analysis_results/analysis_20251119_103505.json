@@ -1,0 +1,90 @@
+[
+  {
+    "file_path": "sample_code/buggy_processor.py",
+    "timestamp": "2025-11-19T10:35:05.922585",
+    "model": "JM1",
+    "metrics": {
+      "loc": 103,
+      "num_classes": 1,
+      "num_functions": 11,
+      "num_imports": 0,
+      "num_loops": 8,
+      "num_conditionals": 8,
+      "num_assignments": 14,
+      "cyclomatic_complexity": 18,
+      "max_nesting_depth": 14,
+      "num_operators": 18
+    },
+    "prediction": {
+      "is_defective": true,
+      "defect_probability": 0.6266939577336282,
+      "status": "DEFECTIVE"
+    }
+  },
+  {
+    "file_path": "sample_code/string_utils.py",
+    "timestamp": "2025-11-19T10:35:05.934005",
+    "model": "JM1",
+    "metrics": {
+      "loc": 45,
+      "num_classes": 0,
+      "num_functions": 5,
+      "num_imports": 0,
+      "num_loops": 3,
+      "num_conditionals": 3,
+      "num_assignments": 8,
+      "cyclomatic_complexity": 7,
+      "max_nesting_depth": 8,
+      "num_operators": 2
+    },
+    "prediction": {
+      "is_defective": true,
+      "defect_probability": 0.697371948469037,
+      "status": "DEFECTIVE"
+    }
+  },
+  {
+    "file_path": "sample_code/file_handler.py",
+    "timestamp": "2025-11-19T10:35:05.945363",
+    "model": "JM1",
+    "metrics": {
+      "loc": 58,
+      "num_classes": 0,
+      "num_functions": 5,
+      "num_imports": 1,
+      "num_loops": 3,
+      "num_conditionals": 2,
+      "num_assignments": 9,
+      "cyclomatic_complexity": 7,
+      "max_nesting_depth": 10,
+      "num_operators": 3
+    },
+    "prediction": {
+      "is_defective": true,
+      "defect_probability": 0.7111048656365863,
+      "status": "DEFECTIVE"
+    }
+  },
+  {
+    "file_path": "sample_code/calculator.py",
+    "timestamp": "2025-11-19T10:35:05.956196",
+    "model": "JM1",
+    "metrics": {
+      "loc": 32,
+      "num_classes": 0,
+      "num_functions": 5,
+      "num_imports": 0,
+      "num_loops": 0,
+      "num_conditionals": 2,
+      "num_assignments": 0,
+      "cyclomatic_complexity": 3,
+      "max_nesting_depth": 8,
+      "num_operators": 4
+    },
+    "prediction": {
+      "is_defective": true,
+      "defect_probability": 0.5244214359962164,
+      "status": "DEFECTIVE"
+    }
+  }
+]

@@ -1,0 +1,5 @@
+File,Status,Defect Probability,LOC,Complexity,Functions
+buggy_processor.py,DEFECTIVE,62.67%,103,18,11
+string_utils.py,DEFECTIVE,69.74%,45,7,5
+file_handler.py,DEFECTIVE,71.11%,58,7,5
+calculator.py,DEFECTIVE,52.44%,32,3,5

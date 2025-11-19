@@ -1,0 +1,42 @@
+================================================================================
+UNIFIED DEFECT MITIGATION FRAMEWORK - FINAL REPORT
+================================================================================
+Generated: 2025-11-19T11:26:18.924033
+
+SUMMARY
+--------------------------------------------------------------------------------
+Total files:      3
+Defective files:  3 (100.0%)
+Clean files:      0
+Fixed files:      3
+
+FILE DETAILS
+--------------------------------------------------------------------------------
+
+File: test_file_1.py
+  Phase 1: DEFECTIVE (65.00% probability)
+  Phase 2: 0 suspicious lines - []
+  Phase 3: 4 fixes applied
+    - DivisionByZero (confidence: 0.95)
+    - DivisionByZero (confidence: 0.95)
+    - NoneCheck (confidence: 0.88)
+    - EmptyListCheck (confidence: 0.87)
+
+File: test_file_2.py
+  Phase 1: DEFECTIVE (80.00% probability)
+  Phase 2: 0 suspicious lines - []
+  Phase 3: 4 fixes applied
+    - IndexError (confidence: 0.90)
+    - DivisionByZero (confidence: 0.95)
+    - NoneCheck (confidence: 0.88)
+    - DivisionByZero (confidence: 0.95)
+
+File: test_file_3.py
+  Phase 1: DEFECTIVE (70.00% probability)
+  Phase 2: 0 suspicious lines - []
+  Phase 3: 3 fixes applied
+    - NoneCheck (confidence: 0.88)
+    - EmptyListCheck (confidence: 0.87)
+    - DivisionByZero (confidence: 0.95)
+
+================================================================================
