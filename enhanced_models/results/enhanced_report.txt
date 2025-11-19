@@ -1,0 +1,58 @@
+======================================================================
+ENHANCED NASA DEFECT PREDICTION - TRAINING REPORT
+======================================================================
+Generated: 2025-11-19 11:01:34
+Model Type: Advanced Stacking Ensemble
+Datasets Trained: 5
+
+OVERALL PERFORMANCE
+----------------------------------------------------------------------
+Average Accuracy:  74.85%
+Average F1-Score:  0.4125
+Best Accuracy:     86.49%
+Best F1-Score:     0.5490
+
+DETAILED RESULTS BY DATASET
+----------------------------------------------------------------------
+
+CM1:
+  Accuracy:  62.00%
+  Precision: 0.1316
+  Recall:    0.5000
+  F1-Score:  0.2083
+  ROC-AUC:   0.6433
+  CV F1:     0.0000 (+/- 0.0000)
+
+JM1:
+  Accuracy:  69.68%
+  Precision: 0.3329
+  Recall:    0.5653
+  F1-Score:  0.4190
+  ROC-AUC:   0.7074
+  CV F1:     0.1195 (+/- 0.0365)
+
+KC1:
+  Accuracy:  77.96%
+  Precision: 0.3793
+  Recall:    0.6769
+  F1-Score:  0.4862
+  ROC-AUC:   0.7900
+  CV F1:     0.1406 (+/- 0.0596)
+
+KC2:
+  Accuracy:  78.10%
+  Precision: 0.4828
+  Recall:    0.6364
+  F1-Score:  0.5490
+  ROC-AUC:   0.7440
+  CV F1:     0.3379 (+/- 0.1094)
+
+PC1:
+  Accuracy:  86.49%
+  Precision: 0.2857
+  Recall:    0.6667
+  F1-Score:  0.4000
+  ROC-AUC:   0.8643
+  CV F1:     0.0823 (+/- 0.0831)
+
+======================================================================
