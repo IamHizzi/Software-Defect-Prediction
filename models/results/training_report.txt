@@ -1,0 +1,80 @@
+======================================================================
+NASA PROMISE DATASET - MODEL TRAINING REPORT
+======================================================================
+Generated: 2025-11-19 09:41:56
+
+DATASET SUMMARY
+----------------------------------------------------------------------
+Dataset  Samples  Features  Defective  Clean Defect Rate (%)
+    CM1      498        21         49    449            9.84
+    JM1    10885        21       2106   8779           19.35
+    KC1     2109        21        326   1783           15.46
+    KC2      522        21        107    415           20.50
+    PC1     1109        21         77   1032            6.94
+
+TRAINING RESULTS
+----------------------------------------------------------------------
+
+CM1:
+  Test Set Metrics:
+    Accuracy:  0.7700
+    Precision: 0.1905
+    Recall:    0.4000
+    F1-Score:  0.2581
+  Cross-Validation:
+    Mean F1:   0.0819
+    Std F1:    0.1077
+
+JM1:
+  Test Set Metrics:
+    Accuracy:  0.7235
+    Precision: 0.3538
+    Recall:    0.5202
+    F1-Score:  0.4212
+  Cross-Validation:
+    Mean F1:   0.1809
+    Std F1:    0.0483
+
+KC1:
+  Test Set Metrics:
+    Accuracy:  0.8009
+    Precision: 0.4078
+    Recall:    0.6462
+    F1-Score:  0.5000
+  Cross-Validation:
+    Mean F1:   0.2563
+    Std F1:    0.0594
+
+KC2:
+  Test Set Metrics:
+    Accuracy:  0.7905
+    Precision: 0.5000
+    Recall:    0.5000
+    F1-Score:  0.5000
+  Cross-Validation:
+    Mean F1:   0.4164
+    Std F1:    0.2010
+
+PC1:
+  Test Set Metrics:
+    Accuracy:  0.8919
+    Precision: 0.3333
+    Recall:    0.6000
+    F1-Score:  0.4286
+  Cross-Validation:
+    Mean F1:   0.2113
+    Std F1:    0.1469
+
+======================================================================
+
+OVERALL STATISTICS
+----------------------------------------------------------------------
+Average Accuracy:  0.7954
+Average Precision: 0.3571
+Average Recall:    0.5333
+Average F1-Score:  0.4216
+
+======================================================================
+Models saved in: ./models/trained_models
+Results saved in: ./models/results
+======================================================================

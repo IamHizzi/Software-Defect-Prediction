@@ -5,6 +5,8 @@ Phase 1: ML-based defect prediction with ensemble methods
 
 import numpy as np
 import pandas as pd
+import pickle
+import os
 from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -177,22 +179,80 @@ def extract_software_metrics(code_text):
     return metrics
 
 
+def load_pretrained_model(model_path):
+    """
+    Load a pre-trained defect prediction model
+
+    Args:
+        model_path: Path to the pickled model file
+
+    Returns:
+        Loaded DefectPredictor instance
+    """
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model file not found: {model_path}")
+
+    with open(model_path, 'rb') as f:
+        model = pickle.load(f)
+
+    print(f"Loaded pre-trained model from: {model_path}")
+    return model
+
+
+def load_nasa_model(dataset_name='JM1', models_dir='./models/trained_models'):
+    """
+    Load a pre-trained NASA dataset model
+
+    Args:
+        dataset_name: Name of the NASA dataset (CM1, JM1, KC1, KC2, PC1)
+        models_dir: Directory containing trained models
+
+    Returns:
+        Loaded DefectPredictor instance
+    """
+    model_path = os.path.join(models_dir, f'{dataset_name}_model.pkl')
+    return load_pretrained_model(model_path)
+
+
+def list_available_models(models_dir='./models/trained_models'):
+    """
+    List all available pre-trained models
+
+    Args:
+        models_dir: Directory containing trained models
+
+    Returns:
+        List of available model names
+    """
+    if not os.path.exists(models_dir):
+        print(f"Models directory not found: {models_dir}")
+        return []
+
+    models = []
+    for file in os.listdir(models_dir):
+        if file.endswith('_model.pkl'):
+            model_name = file.replace('_model.pkl', '')
+            models.append(model_name)
+
+    return models
+
+
 def generate_synthetic_dataset(n_samples=1000):
     """Generate synthetic dataset for demonstration"""
     np.random.seed(42)
-    
+
     # Generate features
     X = np.random.randn(n_samples, 30)
-    
+
     # Create non-linear decision boundary
-    defect_score = (X[:, 0] ** 2 + X[:, 1] ** 2 + 
+    defect_score = (X[:, 0] ** 2 + X[:, 1] ** 2 +
                    0.5 * X[:, 2] - 0.3 * X[:, 3] +
                    np.random.randn(n_samples) * 0.5)
-    
+
     # Create imbalanced labels (20% defective)
     threshold = np.percentile(defect_score, 80)
     y = (defect_score > threshold).astype(int)
-    
+
     return X, y
 
 
