@@ -1,0 +1,137 @@
+{
+  "CM1": {
+    "dataset": "CM1",
+    "timestamp": "2025-11-19T09:40:47.528554",
+    "n_samples": 498,
+    "n_features": 21,
+    "n_selected_features": 20,
+    "test_size": 0.2,
+    "train_samples": 398,
+    "test_samples": 100,
+    "metrics": {
+      "accuracy": 0.77,
+      "precision": 0.19047619047619047,
+      "recall": 0.4,
+      "f1_score": 0.25806451612903225
+    },
+    "cross_validation": {
+      "scores": [
+        0.0,
+        0.26666666666666666,
+        0.0,
+        0.0,
+        0.14285714285714285
+      ],
+      "mean": 0.0819047619047619,
+      "std": 0.10768224019125767
+    }
+  },
+  "JM1": {
+    "dataset": "JM1",
+    "timestamp": "2025-11-19T09:41:47.797146",
+    "n_samples": 10885,
+    "n_features": 21,
+    "n_selected_features": 20,
+    "test_size": 0.2,
+    "train_samples": 8708,
+    "test_samples": 2177,
+    "metrics": {
+      "accuracy": 0.7234726688102894,
+      "precision": 0.35379644588045234,
+      "recall": 0.5201900237529691,
+      "f1_score": 0.42115384615384616
+    },
+    "cross_validation": {
+      "scores": [
+        0.18761061946902655,
+        0.1402805611222445,
+        0.11885245901639344,
+        0.20080321285140562,
+        0.2567049808429119
+      ],
+      "mean": 0.1808503666603964,
+      "std": 0.048347469955675494
+    }
+  },
+  "KC1": {
+    "dataset": "KC1",
+    "timestamp": "2025-11-19T09:41:52.826106",
+    "n_samples": 2109,
+    "n_features": 21,
+    "n_selected_features": 20,
+    "test_size": 0.2,
+    "train_samples": 1687,
+    "test_samples": 422,
+    "metrics": {
+      "accuracy": 0.8009478672985783,
+      "precision": 0.4077669902912621,
+      "recall": 0.6461538461538462,
+      "f1_score": 0.5
+    },
+    "cross_validation": {
+      "scores": [
+        0.18823529411764706,
+        0.2916666666666667,
+        0.19801980198019803,
+        0.2558139534883721,
+        0.34782608695652173
+      ],
+      "mean": 0.2563123606418811,
+      "std": 0.05942633566028879
+    }
+  },
+  "KC2": {
+    "dataset": "KC2",
+    "timestamp": "2025-11-19T09:41:55.619152",
+    "n_samples": 522,
+    "n_features": 21,
+    "n_selected_features": 20,
+    "test_size": 0.2,
+    "train_samples": 417,
+    "test_samples": 105,
+    "metrics": {
+      "accuracy": 0.7904761904761904,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1_score": 0.5
+    },
+    "cross_validation": {
+      "scores": [
+        0.7391304347826086,
+        0.4090909090909091,
+        0.4666666666666667,
+        0.35294117647058826,
+        0.11428571428571428
+      ],
+      "mean": 0.4164229802592974,
+      "std": 0.20101500212600812
+    }
+  },
+  "PC1": {
+    "dataset": "PC1",
+    "timestamp": "2025-11-19T09:41:56.752060",
+    "n_samples": 1109,
+    "n_features": 21,
+    "n_selected_features": 20,
+    "test_size": 0.2,
+    "train_samples": 887,
+    "test_samples": 222,
+    "metrics": {
+      "accuracy": 0.8918918918918919,
+      "precision": 0.3333333333333333,
+      "recall": 0.6,
+      "f1_score": 0.42857142857142855
+    },
+    "cross_validation": {
+      "scores": [
+        0.36363636363636365,
+        0.10526315789473684,
+        0.20689655172413793,
+        0.38095238095238093,
+        0.0
+      ],
+      "mean": 0.21134969084152386,
+      "std": 0.14690076782865244
+    }
+  }
+}
