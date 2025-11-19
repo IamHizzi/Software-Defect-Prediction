@@ -1,0 +1,315 @@
+{
+  "timestamp": "2025-11-19T11:26:18.924033",
+  "files": [
+    {
+      "file": "test_file_1.py",
+      "original_code": "\ndef calculate_average(numbers):\n    total = sum(numbers)\n    return total / len(numbers)  # Bug: no zero check\n\ndef get_first_item(items):\n    return items[0]  # Bug: no empty check\n",
+      "phase1": {
+        "is_defective": true,
+        "defect_probability": 0.65,
+        "metrics": {
+          "loc": 8,
+          "num_classes": 0,
+          "num_functions": 2,
+          "num_imports": 0,
+          "num_loops": 0,
+          "num_conditionals": 0,
+          "num_assignments": 1,
+          "cyclomatic_complexity": 1,
+          "max_nesting_depth": 6,
+          "num_operators": 1
+        }
+      },
+      "phase2": {
+        "suspicious_nodes": [
+          {
+            "node_id": 28,
+            "score": 0.512275755405426,
+            "node_type": "Load",
+            "line": -1
+          },
+          {
+            "node_id": 15,
+            "score": 0.5122033953666687,
+            "node_type": "Load",
+            "line": -1
+          },
+          {
+            "node_id": 0,
+            "score": 0.5111238360404968,
+            "node_type": "Module",
+            "line": -1
+          }
+        ],
+        "top_lines": [],
+        "scores": [
+          0.5111238360404968,
+          0.5068657398223877,
+          0.5028917193412781,
+          0.5076689720153809,
+          0.5004234910011292,
+          0.5024193525314331,
+          0.5096270442008972,
+          0.5002877712249756,
+          0.5050668716430664,
+          0.510059654712677,
+          0.5050668716430664,
+          0.510059654712677,
+          0.5010557174682617,
+          0.5036436915397644,
+          0.5099748969078064,
+          0.5122033953666687,
+          0.5100287199020386,
+          0.5077184438705444,
+          0.5075844526290894,
+          0.510059654712677,
+          0.5075844526290894,
+          0.510059654712677,
+          0.5068933963775635,
+          0.5029321908950806,
+          0.5077279210090637,
+          0.5011277198791504,
+          0.5038113594055176,
+          0.5101656913757324,
+          0.512275755405426,
+          0.5102234482765198,
+          0.5102234482765198
+        ]
+      },
+      "phase3": {
+        "fixed_code": "\ndef calculate_average(numbers):\n    total = sum(numbers)\n    if len(numbers)  # Bug: no zero check != 0:\n        return total / len(numbers)  # Bug: no zero check\n    else:\n        return 0\n\ndef get_first_item(items):\n    return items[0]  # Bug: no empty check\n",
+        "applied_fixes": [
+          {
+            "type": "DivisionByZero",
+            "pattern": "return {numerator} / {denominator}",
+            "confidence": 0.95
+          },
+          {
+            "type": "DivisionByZero",
+            "pattern": "{result} = {numerator} / {denominator}",
+            "confidence": 0.95
+          },
+          {
+            "type": "NoneCheck",
+            "pattern": "return {var}.{method}",
+            "confidence": 0.88
+          },
+          {
+            "type": "EmptyListCheck",
+            "pattern": "return {func}({list})",
+            "confidence": 0.87
+          }
+        ],
+        "is_valid": false
+      }
+    },
+    {
+      "file": "test_file_2.py",
+      "original_code": "\ndef process_data(data):\n    results = []\n    for i in range(len(data)):\n        value = data[i + 1]  # Bug: index out of range\n        results.append(value)\n    return results\n",
+      "phase1": {
+        "is_defective": true,
+        "defect_probability": 0.7999999999999999,
+        "metrics": {
+          "loc": 8,
+          "num_classes": 0,
+          "num_functions": 1,
+          "num_imports": 0,
+          "num_loops": 1,
+          "num_conditionals": 0,
+          "num_assignments": 2,
+          "cyclomatic_complexity": 2,
+          "max_nesting_depth": 7,
+          "num_operators": 1
+        }
+      },
+      "phase2": {
+        "suspicious_nodes": [
+          {
+            "node_id": 36,
+            "score": 0.5122882723808289,
+            "node_type": "Load",
+            "line": -1
+          },
+          {
+            "node_id": 28,
+            "score": 0.5122882723808289,
+            "node_type": "Load",
+            "line": -1
+          },
+          {
+            "node_id": 25,
+            "score": 0.5122159719467163,
+            "node_type": "Load",
+            "line": -1
+          }
+        ],
+        "top_lines": [],
+        "scores": [
+          0.5110041499137878,
+          0.5067745447158813,
+          0.5028165578842163,
+          0.5076044797897339,
+          0.5003985166549683,
+          0.5024658441543579,
+          0.509682834148407,
+          0.5024658441543579,
+          0.509682834148407,
+          0.49935591220855713,
+          0.500210702419281,
+          0.508388102054596,
+          0.49813029170036316,
+          0.5038194060325623,
+          0.5099889039993286,
+          0.5016679763793945,
+          0.5054174661636353,
+          0.5100545883178711,
+          0.5054174661636353,
+          0.5100545883178711,
+          0.497780442237854,
+          0.5030443668365479,
+          0.5095526576042175,
+          0.5029587149620056,
+          0.5092340111732483,
+          0.5122159719467163,
+          0.5091848969459534,
+          0.5120201706886292,
+          0.5122882723808289,
+          0.5120820999145508,
+          0.5120820999145508,
+          0.5092834234237671,
+          0.5001078248023987,
+          0.5057142972946167,
+          0.507348358631134,
+          0.5097907781600952,
+          0.5122882723808289,
+          0.5098473429679871,
+          0.5074090361595154,
+          0.5099889039993286,
+          0.5010694861412048,
+          0.5038721561431885,
+          0.5104265213012695
+        ]
+      },
+      "phase3": {
+        "fixed_code": "\ndef process_data(data):\n    results = []\n    for i in range(len(data) - 1):\n        value = data[i + 1]  # Bug: index out of range\n        results.append(value)\n    return results\n",
+        "applied_fixes": [
+          {
+            "type": "IndexError",
+            "pattern": "for i in range(len({var})):\n    {body} {var}[i + 1]",
+            "confidence": 0.9
+          },
+          {
+            "type": "DivisionByZero",
+            "pattern": "{result} = {numerator} / {denominator}",
+            "confidence": 0.95
+          },
+          {
+            "type": "NoneCheck",
+            "pattern": "return {var}.{method}",
+            "confidence": 0.88
+          },
+          {
+            "type": "DivisionByZero",
+            "pattern": "return {numerator} / {denominator}",
+            "confidence": 0.95
+          }
+        ],
+        "is_valid": true
+      }
+    },
+    {
+      "file": "test_file_3.py",
+      "original_code": "\ndef safe_divide(a, b):\n    if b != 0:\n        return a / b\n    else:\n        return 0  # Clean code\n",
+      "phase1": {
+        "is_defective": true,
+        "defect_probability": 0.7,
+        "metrics": {
+          "loc": 7,
+          "num_classes": 0,
+          "num_functions": 1,
+          "num_imports": 0,
+          "num_loops": 0,
+          "num_conditionals": 1,
+          "num_assignments": 0,
+          "cyclomatic_complexity": 2,
+          "max_nesting_depth": 6,
+          "num_operators": 1
+        }
+      },
+      "phase2": {
+        "suspicious_nodes": [
+          {
+            "node_id": 17,
+            "score": 0.5122820138931274,
+            "node_type": "Load",
+            "line": -1
+          },
+          {
+            "node_id": 14,
+            "score": 0.5122820138931274,
+            "node_type": "Load",
+            "line": -1
+          },
+          {
+            "node_id": 8,
+            "score": 0.5122820138931274,
+            "node_type": "Load",
+            "line": -1
+          }
+        ],
+        "top_lines": [],
+        "scores": [
+          0.5111364126205444,
+          0.5068703889846802,
+          0.5028879046440125,
+          0.5076650977134705,
+          0.5076650977134705,
+          0.5000582337379456,
+          0.5016181468963623,
+          0.5090007185935974,
+          0.5122820138931274,
+          0.5090538263320923,
+          0.5090538263320923,
+          0.49984949827194214,
+          0.5052186846733093,
+          0.5101669430732727,
+          0.5122820138931274,
+          0.5102246999740601,
+          0.5101669430732727,
+          0.5122820138931274,
+          0.49991288781166077,
+          0.5055316686630249
+        ]
+      },
+      "phase3": {
+        "fixed_code": "\ndef safe_divide(a, b):\n    if b != 0:\n        return a / b\n    else:\n        return 0  # Clean code\n",
+        "applied_fixes": [
+          {
+            "type": "NoneCheck",
+            "pattern": "return {var}.{method}",
+            "confidence": 0.88
+          },
+          {
+            "type": "EmptyListCheck",
+            "pattern": "return {func}({list})",
+            "confidence": 0.87
+          },
+          {
+            "type": "DivisionByZero",
+            "pattern": "return {numerator} / {denominator}",
+            "confidence": 0.95
+          }
+        ],
+        "is_valid": true
+      }
+    }
+  ],
+  "summary": {
+    "total_files": 3,
+    "defective_files": 3,
+    "clean_files": 0,
+    "fixed_files": 3,
+    "defect_rate": 1.0,
+    "fix_rate": 1.0
+  }
+}
